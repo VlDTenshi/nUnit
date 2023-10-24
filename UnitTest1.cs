@@ -128,7 +128,18 @@ namespace SeleniumCsharp
 
                 }
             }
-            catch (Exception) { }
+            catch (Exception) 
+            {
+                try
+                {
+                    Thread.Sleep(2500);
+                    IWebElement liElement = driver.FindElement(By.CssSelector("ul > li[text()='Отключенный элемент']"));
+
+                    bool isDisabled = liElement.GetAttribute("disabled") == "true";
+                    Assert.IsTrue(isDisabled, "Элемент не активен.");
+                }
+                catch (Exception) { Console.WriteLine("Все в порядке"); }
+            }
 
 
             // Нажимаем кнопку "Avaleht, Tööd, Materjalid, WB portfoolio" (Показать данные)

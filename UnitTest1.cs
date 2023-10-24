@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Threading;
 using System.Xml.Linq;
 
+
 namespace SeleniumCsharp
 {
     public class Tests
@@ -22,12 +23,51 @@ namespace SeleniumCsharp
         public void start_browser()
         {
             driver = new ChromeDriver();
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             driver.Manage().Window.Maximize();
             Thread.Sleep(2500);
         }
         [Test]
-        public void test() { 
+        public void test()
+        {
             driver.Navigate().GoToUrl(test_url);
+            //try
+            //{
+
+
+            //    IWebElement header = driver.FindElement(By.TagName("header"));
+            //    IList<IWebElement> h1Elements = header.FindElements(By.TagName("h1"));
+            //    IList<IWebElement> h2Elements = header.FindElements(By.TagName("h2"));
+
+            //    foreach (IWebElement element in h1Elements)
+            //    {
+            //        wait.Until(ExpectedConditions.ElementToBeClickable(element));
+
+            //        Actions actions = new Actions(driver);
+            //        actions.MoveToElement(element).Perform();
+
+            //        string color = element.GetCssValue("color");
+            //        bool isHighlighted = color.Equals("rgba(255, 165, 0, 1)"); // Проверьте значение цвета для подсветки
+            //        Assert.IsTrue(isHighlighted, "Элемент не подсвечивается.");
+            //    }
+
+            //    foreach (IWebElement element in h2Elements)
+            //    {
+            //        wait.Until(ExpectedConditions.ElementToBeClickable(element));
+
+            //        Actions actions = new Actions(driver);
+            //        actions.MoveToElement(element).Perform();
+
+            //        string color = element.GetCssValue("color");
+            //        bool isHighlighted = color.Equals("rgba(255, 165, 0, 1)"); // Проверьте значение цвета для подсветки
+            //        Assert.IsTrue(isHighlighted, "Элемент не подсвечивается.");
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    // Обработка исключения, например, вывод ошибки
+            //    Console.WriteLine("Произошла ошибка: " + ex.Message);
+            //}
             try
             {
                 Thread.Sleep(2500);
@@ -37,51 +77,58 @@ namespace SeleniumCsharp
 
                 foreach (IWebElement element in h1Elements)
                 {
-                    Thread.Sleep(5000);
+                    Thread.Sleep(2500);
                     string text = element.Text;
                     Actions actions = new Actions(driver);
                     actions.MoveToElement(element).Perform();
-                    bool isHighlighted = element.GetCssValue("background-color").Equals("orange");
+                    string color = element.GetCssValue("color");
+                    bool isHighlighted = color.Equals("rgba(255, 165, 0, 1)");
+                    //bool isHighlighted = element.GetAttribute("style").Contains("color");
                     Assert.IsTrue(isHighlighted, "Элемент не подсвечивается.");
                 }
 
                 foreach (IWebElement element in h2Elements)
                 {
-                    Thread.Sleep(5000);
+                    Thread.Sleep(2500);
                     string text = element.Text;
                     Actions actions = new Actions(driver);
                     actions.MoveToElement(element).Perform();
-                    bool isHighlighted = element.GetCssValue("background-color").Equals("orange");
+                    string color = element.GetCssValue("color");
+                    bool isHighlighted = color.Equals("rgba(255, 165, 0, 1)");
+                    //bool isHighlighted = element.GetAttribute("style").Contains("color");
                     Assert.IsTrue(isHighlighted, "Элемент не подсвечивается.");
                 }
             }
             catch (Exception) { }
-            try { 
-            //// Находим элемент, к которому хотим подвести курсор
-            IWebElement nav = driver.FindElement(By.Id("hide"));
-            IList<IWebElement> liElements = nav.FindElements(By.CssSelector("ul > li"));
-
-            foreach (IWebElement liElement in liElements)
+            try
             {
-                Thread.Sleep(5000);
-                // Выполните нужные действия с каждым элементом li
-                string text = liElement.Text;
-                // ... остальные действия
-                Actions actions = new Actions(driver);
+                //// Находим элемент, к которому хотим подвести курсор
+                IWebElement nav = driver.FindElement(By.Id("hide"));
+                IList<IWebElement> liElements = nav.FindElements(By.CssSelector("ul > li"));
 
-                // Подводим курсор к элементу
-                actions.MoveToElement(liElement).Perform();
-                
+                foreach (IWebElement liElement in liElements)
+                {
+                    Thread.Sleep(2500);
+                    // Выполните нужные действия с каждым элементом li
+                    string text = liElement.Text;
+                    // ... остальные действия
+                    Actions actions = new Actions(driver);
 
-                // Проверяем, что элемент подсвечивается (например, изменяется цвет фона или бордюра)
-                bool isHighlighted = liElement.GetCssValue("background-color").Equals("deepskyblue");
-                
+                    // Подводим курсор к элементу
+                    actions.MoveToElement(liElement).Perform();
 
-                // Делаем утверждение (assert), чтобы проверить, подсвечивается ли элемент
-                Assert.IsTrue(isHighlighted, "Элемент не подсвечивается.");
-                
+                    string color = liElement.GetCssValue("background-color");
+                    bool isHighlighted = color.Equals("rgba(0, 191, 255, 1)");
+                    // Проверяем, что элемент подсвечивается (например, изменяется цвет фона или бордюра)
+                    //bool isHighlighted = liElement.GetAttribute("style").Contains("color");
+
+
+                    // Делаем утверждение (assert), чтобы проверить, подсвечивается ли элемент
+                    Assert.IsTrue(isHighlighted, "Элемент не подсвечивается.");
+
+                }
             }
-            } catch (Exception) { }
+            catch (Exception) { }
 
 
             // Нажимаем кнопку "Avaleht, Tööd, Materjalid, WB portfoolio" (Показать данные)
